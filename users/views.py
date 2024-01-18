@@ -20,3 +20,10 @@ class MyLogoutView(View):
     def get(self, request):
         logout(request)
         return render(request, 'users/logout.html')
+    
+
+
+class Profile(View):
+    
+    def get(self, request, *args, **kwargs):
+        return render(template_name='users/profile.html', request=request)

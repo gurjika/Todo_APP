@@ -7,6 +7,8 @@ class TodoForm(forms.ModelForm):
         fields = ['content']
 
 
+class UpdateTodoForm(TodoForm):
+    is_active = forms.BooleanField(label='Finished', required=False)
 
 
 class TaskForm(forms.ModelForm):

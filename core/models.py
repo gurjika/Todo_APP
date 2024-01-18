@@ -18,7 +18,7 @@ class Task(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse('tasks-detail', kwargs={'pk': self.pk})
+        return reverse('tasks-detail', kwargs={'username': self.created_by.username, 'pk': self.pk})
 
 class Todo(models.Model):
     content = models.TextField(max_length=200)
@@ -27,7 +27,7 @@ class Todo(models.Model):
     is_finished = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse('todo-detail', kwargs={'pk': self.task.pk, 'todo_pk': self.pk })
+        return reverse('todo-detail', kwargs={'username': self.task.created_by.username, 'pk': self.task.pk, 'todo_pk': self.pk })
     
     def __str__(self):
         return self.content

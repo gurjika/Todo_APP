@@ -7,6 +7,11 @@
 .task-container {
     width: 420px;
     margin-bottom: 50px;
+    padding-bottom: 5px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(122, 117, 117, 0.4);
+    margin-bottom: 40px
     
 }
 
@@ -17,6 +22,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+
 }
 
 .content-title {
@@ -28,5 +34,9 @@ body {
     border-bottom-color: rgba(122, 117, 117, 0.4);
     margin-bottom: 40px;
     
+
 }
 
+.task-container-info {
+    font-weight: bold;
+}

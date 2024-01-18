@@ -1,14 +1,12 @@
 from typing import Any
 from django.db.models.base import Model as Model
-from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView, TemplateView, DetailView, View, CreateView, UpdateView, DeleteView
-from .models import Task, Todo
-from .forms import TaskForm, TodoForm
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import Task, Todo
+from .forms import TaskForm, TodoForm, UpdateTodoForm
 # Create your views here.
 
 
@@ -16,9 +14,11 @@ class TodoObjectMixin:
     def get_object(self):
         task_id = self.kwargs.get('pk')
         todo_id = self.kwargs.get('todo_pk')
+        username = self.kwargs.get('username')
     
         
-        obj = get_object_or_404(Todo.objects.select_related('task__created_by'), task__id=task_id, pk=todo_id)
+        obj = get_object_or_404(Todo.objects.select_related('task__created_by'), task__created_by__username = username, \
+                                task__id=task_id, pk=todo_id)
         return obj
 
     def test_func(self):
@@ -38,12 +38,12 @@ class TaskTestUserMixin:
 
 
     
-class QueryTasksByUsername:
+class QueryTasksByUsernameMixin:
     def get_queryset(self):
         username = self.kwargs['username']
         user = get_object_or_404(User, username=username)
 
-        queryset = Task.objects.filter(created_by=user)
+        queryset = Task.objects.prefetch_related('todos').filter(created_by=user).all().order_by('-time_created')
         if self.request.user == user:
             return queryset
         else:
@@ -59,26 +59,27 @@ class QueryTasksByUsername:
 
     
 
-class TasksView(QueryTasksByUsername, LoginRequiredMixin, ListView):
+class TasksView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
     template_name = 'core/tasks_detail.html'
     context_object_name = 'tasks'
 
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context =  super().get_context_data(**kwargs)
-        context['todos'] = Todo.objects.select_related('task').select_related('task__created_by').filter(task_id=self.kwargs['pk']).all()
+        context['todos'] = Todo.objects.select_related('task').select_related('task__created_by'). \
+        filter(task_id=self.kwargs['pk']).all()
+
         return context
     
  
     
     
 
-class TasksAllView(QueryTasksByUsername, LoginRequiredMixin, ListView):
+class TasksAllView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
     template_name = 'core/tasks_all.html'
     context_object_name = 'tasks'
 
    
-
 
 
 class TodosView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, DetailView):
@@ -86,9 +87,6 @@ class TodosView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, Detail
     context_object_name = 'todo'
 
   
-   
-
-    
     
 
 class HomeView(TemplateView):
@@ -126,7 +124,7 @@ class UpdateTask(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin, Upd
 class TodoUpdateView(TodoObjectMixin, UserPassesTestMixin, UpdateView):
     template_name = 'core/todo_add.html'
     model = Todo
-    form_class = TodoForm
+    form_class = UpdateTodoForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
