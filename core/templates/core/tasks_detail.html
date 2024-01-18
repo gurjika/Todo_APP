@@ -8,12 +8,12 @@
 
 <div class="sidebar">
     <div class="sidebar-title">
-        All Tasks
+        {{ username }}'s Tasks
     </div>
 
     <div class="sidebar-item-container">
         {% for task in tasks %}
-        <a class="sidebar-item" href="{% url 'tasks-detail' task.id %}">
+        <a class="sidebar-item" href="{% url 'tasks-detail' username task.id %}">
 
             {{ task.title }}
             <div class="sidebar-arrow-container">
@@ -30,13 +30,20 @@
 </div>
 <div class="grid-container">
     {% for todo in todos %}
-    <a class="container" href="{% url 'todo-detail' todo.task.id todo.id %}">
-        <div class="title" >
-
-            <div class="title-info">
-                Todo
+    <div class="container">
+        <div class="title">
+            <div style="display: flex; align-items: center;">
+                <div class="title-info">
+                    Todo
+                </div>
+                {% if user == todo.task.created_by %}
+                <div class="edit-img-div">
+                    <a href="{% url 'todo-detail' user.username todo.task.id todo.id %}">
+                        <img src="{% get_media_prefix %}edit.png" class="edit-img">
+                    </a>    
+                </div>
+                {% endif %}
             </div>
-    
             <div class="title-time">
                 {{ todo.time_created|date:"h:i A" }}
             </div>
@@ -49,7 +56,7 @@
         </div>
 
 
-    </a>
+    </div>
     {% endfor %}
     
 

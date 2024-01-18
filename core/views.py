@@ -16,7 +16,7 @@ class TodoObjectMixin:
     def get_object(self):
         task_id = self.kwargs.get('pk')
         todo_id = self.kwargs.get('todo_pk')
-        #fdsjfjd
+    
         
         obj = get_object_or_404(Todo.objects.select_related('task__created_by'), task__id=task_id, pk=todo_id)
         return obj
@@ -27,6 +27,7 @@ class TodoObjectMixin:
             return True
         return False
     
+     
 class TaskTestUserMixin:
         def test_func(self):
             task = get_object_or_404(Task, pk=self.kwargs['pk'])
@@ -49,38 +50,42 @@ class QueryTasksByUsername:
             queryset = queryset.filter(is_public=True)
             return queryset
         
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.kwargs['username']
+        return context
+
+  
+
     
 
-class TasksView(LoginRequiredMixin, ListView):
+class TasksView(QueryTasksByUsername, LoginRequiredMixin, ListView):
     template_name = 'core/tasks_detail.html'
     context_object_name = 'tasks'
 
-    def get_queryset(self):
-        author = self.request.user
-        queryset = Task.objects.filter(created_by=author).all().order_by('-time_created')
-        return queryset
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['todos'] = Todo.objects.select_related('task').filter(task_id=self.kwargs['pk']).all()
-
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context =  super().get_context_data(**kwargs)
+        context['todos'] = Todo.objects.select_related('task').select_related('task__created_by').filter(task_id=self.kwargs['pk']).all()
         return context
     
+ 
+    
+    
 
-class TasksAllView(LoginRequiredMixin, ListView):
+class TasksAllView(QueryTasksByUsername, LoginRequiredMixin, ListView):
     template_name = 'core/tasks_all.html'
     context_object_name = 'tasks'
 
+   
 
-    def get_queryset(self):
-        author = self.request.user
-        return Task.objects.filter(created_by=author).all()
 
 
 class TodosView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, DetailView):
     template_name = 'core/todo_detail.html'
     context_object_name = 'todo'
 
+  
    
 
     
@@ -163,21 +168,6 @@ class DeleteTaskView(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin,
         return f'/tasks'
     
 
-class OtherTasksView(QueryTasksByUsername, ListView):
-    template_name = 'core/tasks_all.html'
-    context_object_name = 'tasks'
-
-    
-
-class OtherTodosView(QueryTasksByUsername, ListView):
-    template_name = 'core/tasks_detail.html'
-    context_object_name = 'tasks'
-
-
-    def get_context_data(self, **kwargs: Any):
-        context = super().get_context_data(**kwargs)
-        context['todos'] = Todo.objects.filter(pk=self.kwargs['pk'])
-        return context
 
         
     

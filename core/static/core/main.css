@@ -23,7 +23,6 @@ body{
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 5px;
-    cursor: pointer;
     transition: background-color 0.15s;
 }
 
@@ -32,7 +31,6 @@ body{
 }
 
 .title {
-    cursor: pointer;
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
@@ -163,4 +161,15 @@ body{
 
 .follow-arrow {
     width: 25px;
+}
+
+
+.edit-img {
+    width: 20px;
+}
+
+.edit-img-div{
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
 }
