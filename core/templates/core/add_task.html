@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'users/login.css' %}">
+{% endblock %}
+{% block content %}
+<div>
+    <div class="login-main">
+        <div class="login-container">
+            <div class="login-title">
+                {{ title }}
+            </div>  
+    
+            <div class="login-form" style="width: 400px;">
+                <form method="post" class="your-custom-class">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div style="width: 100%; display: flex; justify-content: center;">
+                    <button class="submit-btn" type="submit">Submit</button>
+                    </div>  
+                </form>
+            </div>
+    
+        </div>
+    </div>
+</div>
+{% endblock %}

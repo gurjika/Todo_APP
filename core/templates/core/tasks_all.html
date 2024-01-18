@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'core/tasks_all.css' %}">
+{% endblock %}
+{% block content %}
+<div style="padding-left: 30px;">
+    <div style="display: flex; justify-content: center;">
+        <div class="content-title">
+            My tasks
+        </div>
+    </div>
+    <div class="tasks-content">
+        {% for task in tasks %}
+        <div class="task-container">
+        
+            <div>
+                <div class="task-container-titles">
+                    <div>
+                        <a style="text-decoration: none;" href="{% url 'tasks-detail' task.id %}">{{ task.title }}</a>
+                        
+                    </div>
+
+                    <div>
+                        {{ task.time_created|date:"F d, Y" }}
+                    </div>
+                </div>
+
+                <div class="task-container-info">
+                    Active Todos {{ task.todos.count }}
+                </div>
+
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

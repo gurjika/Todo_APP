@@ -1,0 +1,32 @@
+.tasks-content {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.task-container {
+    width: 420px;
+    margin-bottom: 50px;
+    
+}
+
+body {
+    padding-left: 0;
+}
+.task-container-titles {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.content-title {
+    font-size: 40px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(122, 117, 117, 0.4);
+    margin-bottom: 40px;
+    
+}
+

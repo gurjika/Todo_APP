@@ -1,0 +1,17 @@
+body {
+    padding-left: 0;
+    padding-bottom: 100px;
+}
+
+.logout-main {
+    display: flex;
+    justify-content: center;
+}
+
+.logout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+
+}

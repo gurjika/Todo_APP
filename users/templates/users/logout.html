@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{%block styles %}
+<link rel="stylesheet" href="../../static/users/logout.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="logout-main">
+    <div class="logout-container">
+       <div>
+        You have been logged out successfully
+       </div>
+
+       <div>
+            <a href="{% url 'login' %}">Login again</a>
+       </div>
+    </div>
+</div>
+
+{% endblock %}
