@@ -16,7 +16,7 @@ class TodoObjectMixin:
     def get_object(self):
         task_id = self.kwargs.get('pk')
         todo_id = self.kwargs.get('todo_pk')
-
+        #fdsjfjd
         obj = get_object_or_404(Todo.objects.select_related('task__created_by'), task__id=task_id, pk=todo_id)
         return obj
 
