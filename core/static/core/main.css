@@ -174,3 +174,8 @@ body{
     align-items: center;
     margin-left: 5px;
 }
+
+
+.finished {
+    width: 30px;
+}

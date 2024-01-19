@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load static %}
+{% load todo_active_filter %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'core/tasks_all.css' %}">
 {% endblock %}
@@ -27,7 +28,7 @@
                 </div>
 
                 <div class="task-container-info">
-                    Active Todos: {{ task.todos.count }}
+                    Active Todos: {{ task.todos.all|filter_todo }}
                 </div>
 
 

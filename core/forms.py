@@ -7,12 +7,19 @@ class TodoForm(forms.ModelForm):
         fields = ['content']
 
 
-class UpdateTodoForm(TodoForm):
-    is_active = forms.BooleanField(label='Finished', required=False)
-
-
+class UpdateTodoForm(forms.ModelForm):
+    is_finished = forms.BooleanField(label='Finished', required=False)
+    class Meta:
+        model = Todo
+        fields = ['content', 'is_finished']
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title']
 
+class UpdateTaskForm(forms.ModelForm):
+    is_finished = forms.BooleanField(label='Finished', required=False)
+
+    class Meta:
+        model = Task
+        fields = ['title', 'is_finished']

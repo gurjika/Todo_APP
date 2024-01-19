@@ -6,7 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, TemplateView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Task, Todo
-from .forms import TaskForm, TodoForm, UpdateTodoForm
+from django.contrib import messages
+from .forms import TaskForm, TodoForm, UpdateTaskForm, UpdateTodoForm
 # Create your views here.
 
 
@@ -44,6 +45,8 @@ class QueryTasksByUsernameMixin:
         user = get_object_or_404(User, username=username)
 
         queryset = Task.objects.prefetch_related('todos').filter(created_by=user).all().order_by('-time_created')
+     
+        
         if self.request.user == user:
             return queryset
         else:
@@ -79,6 +82,8 @@ class TasksAllView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
     template_name = 'core/tasks_all.html'
     context_object_name = 'tasks'
 
+    
+   
    
 
 
@@ -112,7 +117,7 @@ class AddTask(LoginRequiredMixin, CreateView):
 
 class UpdateTask(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
-    form_class = TaskForm
+    form_class = UpdateTaskForm
     template_name = 'core/add_task.html'
 
     def get_context_data(self, **kwargs):
@@ -145,7 +150,9 @@ class TodoAddView(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
     def form_valid(self, form: BaseModelForm):
         task = Task.objects.get(pk=self.kwargs['pk'])
         form.instance.task = task
+        messages.success(message='todo added', request=self.request)
         return super().form_valid(form)
+    
     
 
     
