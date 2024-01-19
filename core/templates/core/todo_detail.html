@@ -1,6 +1,79 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'core/todo_detail.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h1>{{ todo.content }}</h1>
+    <div class="container-detail">
+        <div class="intro-title">
+            {{ todo.task.title }}
+        </div>
+
+        {% if todo.is_finished %}
+        <div>
+            <div class="container" style="border-color: green;">
+            {% else %}
+            <div class="container">
+            {% endif %}
+                <div class="title">
+                    <div style="display: flex; align-items: center;">
+                        <div class="title-info">
+                            Todo
+                        </div>
+                    
+                    </div>
+                    {% if todo.is_finished %}
+                    <div style="display: flex; align-items: center; width: 100px; justify-content: space-between;">
+                        
+
+                        <div class="title-time">
+                            {{ todo.time_created|date:"h:i A" }}
+                        </div>
+
+                        <div>
+                            <img src="{% get_media_prefix %}accept.png" class="finished">
+                        </div>
+                        
+                
+
+                    
+
+                    </div>
+                    {% else %}
+
+                    <div class="title-time">
+                        {{ todo.time_created|date:"h:i A" }}
+                    </div>
+
+
+                    {% endif %}
+                </div>
+            
+                <div>
+                    <p class="todo-text">
+                        {{ todo.content }}
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="update-delete-footer-container">
+        <div class="update-delete-footer">
+            <a class="delete-btn-container" href="{% url 'delete-todo' username pk todo_pk %}">
+                <button class="delete-btn">
+                    Delete
+                </button>
+            </a>
+
+            <a class="edit-btn-container" href="{% url 'update-todo' username pk todo_pk %}">
+                <button class="edit-btn">
+                    Edit
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}

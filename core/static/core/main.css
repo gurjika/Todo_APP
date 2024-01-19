@@ -165,17 +165,93 @@ body{
 }
 
 
+.edit-img-div{
+    display: flex;
+    align-items: center;
+
+    margin-left: 5px;
+
+}
+
 .edit-img {
     width: 20px;
 }
 
-.edit-img-div{
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-}
 
 
 .finished {
-    width: 30px;
+    width: 25px;
+}
+
+
+.tasks-counter-div {
+    position: relative;
+   
+}
+
+.tasks-counter {
+    position: absolute;
+    top: -10px;
+    right: -24px;
+    background-color: rgb(45, 118, 69);
+    color: white;
+    font-size: 13px;
+    border-radius: 12px;
+    min-height: 23px;
+    min-width: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+
+}
+
+#mytasks {
+    text-decoration: none;
+    border: none;
+    background-color: rgb(177, 35, 177);
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+
+}
+
+#mytasks:hover {
+    background-color: rgb(155, 30, 155);
+}
+
+
+.add-container {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    text-decoration: none;
+    
+}
+
+
+.add-img {
+    cursor: pointer;
+    width: 70px;
+}
+
+
+.info-add{
+    position: absolute;
+    background-color: rgb(134, 128, 128);
+    color: white;
+    padding: 6px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    bottom: 20px;
+    left: -85px;
+    opacity: 0;
+    pointer-events: none;
+    cursor: none;
+    transition: opacity 0.20s;
+}
+
+.add-container:hover .info-add{
+    opacity: 1;
 }

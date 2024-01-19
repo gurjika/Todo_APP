@@ -27,7 +27,7 @@ class Todo(models.Model):
     is_finished = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse('todo-detail', kwargs={'username': self.task.created_by.username, 'pk': self.task.pk, 'todo_pk': self.pk })
+        return reverse('tasks-detail', kwargs={'username': self.task.created_by.username, 'pk': self.task.pk})
     
     def __str__(self):
         return self.content

@@ -6,6 +6,25 @@
 {% block content %}
 
 
+    <a class="add-container" href="{% url 'add-todo' task_pk %}">
+        <div style="position: relative;">
+            <div>
+                <img src="{% get_media_prefix %}plus.png" class="add-img">
+            </div>
+            
+            <div class="info-add">
+                Add Todo
+            </div>
+
+        
+        </div>
+    </a>
+
+
+        
+
+
+
 <div class="sidebar">
     <div class="sidebar-title">
         {{ username }}'s Tasks
@@ -22,9 +41,9 @@
             
         </a>
         {% endfor %}
-   
 
-       
+
+    
     </div>
 
 </div>
@@ -42,8 +61,8 @@
                     Todo
                 </div>
                 {% if user == todo.task.created_by %}
-                <div class="edit-img-div">
-                    <a href="{% url 'todo-detail' user.username todo.task.id todo.id %}">
+                <div>
+                    <a href="{% url 'todo-detail' user.username todo.task.id todo.id %}" class="edit-img-div">
                         <img src="{% get_media_prefix %}edit.png" class="edit-img">
                     </a>    
                 </div>
@@ -61,7 +80,7 @@
                     <img src="{% get_media_prefix %}accept.png" class="finished">
                 </div>
                 
-           
+        
 
             
 
@@ -75,7 +94,7 @@
 
             {% endif %}
         </div>
-       
+    
         <div>
             <p class="todo-text">
                 {{ todo.content }}

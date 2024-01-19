@@ -37,6 +37,14 @@ class TaskTestUserMixin:
                 return True
             return False
 
+class PublicCheckMixin:
+    def test_func(self):
+        task = get_object_or_404(Task, pk=self.kwargs['pk'])
+
+        if task.is_public or self.request.user == task.created_by:
+            return True
+        return False
+
 
     
 class QueryTasksByUsernameMixin:
@@ -62,7 +70,7 @@ class QueryTasksByUsernameMixin:
 
     
 
-class TasksView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
+class TasksView(QueryTasksByUsernameMixin, PublicCheckMixin, LoginRequiredMixin, UserPassesTestMixin, ListView):
     template_name = 'core/tasks_detail.html'
     context_object_name = 'tasks'
 
@@ -71,10 +79,10 @@ class TasksView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
         context =  super().get_context_data(**kwargs)
         context['todos'] = Todo.objects.select_related('task').select_related('task__created_by'). \
         filter(task_id=self.kwargs['pk']).all()
-
+        context['task_pk'] = self.kwargs['pk']
         return context
     
- 
+    
     
     
 
@@ -91,7 +99,13 @@ class TodosView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, Detail
     template_name = 'core/todo_detail.html'
     context_object_name = 'todo'
 
-  
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['username'] = self.kwargs['username']
+        context['pk'] = self.kwargs['pk']
+        context['todo_pk'] = self.kwargs['todo_pk']
+        return context
     
 
 class HomeView(TemplateView):
@@ -163,14 +177,17 @@ class DeleteTodoView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, D
     
     def get_success_url(self):
         pk = self.kwargs['pk']
-        return f'/tasks/{pk}/todos'
+        username = self.kwargs['username']
+        return f'/{username}/tasks/{pk}/todos'
     
     
 class DeleteTaskView(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
 
     def get_success_url(self):
-        return f'/tasks'
+        username = self.kwargs['username']
+
+        return f'/{username}/tasks'
     
 
 
