@@ -48,12 +48,17 @@ class PublicCheckMixin:
 
     
 class QueryTasksByUsernameMixin:
+    created_by = None
+
     def get_queryset(self):
         username = self.kwargs['username']
         user = get_object_or_404(User, username=username)
 
-        queryset = Task.objects.prefetch_related('todos').filter(created_by=user).all().order_by('-time_created')
-     
+        queryset = Task.objects.prefetch_related('todos').filter(created_by=user). \
+        filter(is_finished=False).all().order_by('-time_created')
+        
+        global created_by
+        created_by = user
         
         if self.request.user == user:
             return queryset
@@ -64,6 +69,7 @@ class QueryTasksByUsernameMixin:
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['username'] = self.kwargs['username']
+        context['created_by'] = created_by
         return context
 
   
@@ -90,9 +96,8 @@ class TasksAllView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
     template_name = 'core/tasks_all.html'
     context_object_name = 'tasks'
 
+
     
-   
-   
 
 
 class TodosView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, DetailView):
@@ -183,9 +188,10 @@ class DeleteTodoView(TodoObjectMixin, LoginRequiredMixin, UserPassesTestMixin, D
     
 class DeleteTaskView(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Task
+    
 
     def get_success_url(self):
-        username = self.kwargs['username']
+        username = self.request.user.username
 
         return f'/{username}/tasks'
     

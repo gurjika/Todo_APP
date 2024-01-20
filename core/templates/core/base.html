@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load task_finished_filter %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,9 +61,14 @@
 
 
             <div class="tasks-counter-div">
+                {% with tasks_count=user.tasks.all|filter_task %}
+                {% if tasks_count %}
                 <div  class="tasks-counter">
-                    {{ user.tasks.count }}
+                    {{ tasks_count }}
                 </div>
+                
+                {% endif %}
+                {% endwith %}
 
                 <a href="{% url 'tasks' user.username %}" id="mytasks">
                     My Tasks

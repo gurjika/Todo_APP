@@ -5,11 +5,35 @@
 <link rel="stylesheet" href="{% static 'core/tasks_all.css' %}">
 {% endblock %}
 {% block content %}
-<div style="padding-left: 30px;">
-    <div style="display: flex; justify-content: center;">
-        <div class="content-title">
-            {{ username }}' Tasks
+<div style="padding-bottom: 100px;">
+
+    {% if created_by == request.user %}
+    <div class="add-container">
+        <div style="position: relative;">
+            <a href="{% url 'add-task' %}" class="add-btn">
+                <img src="{% get_media_prefix %}plus.png" class="add-img">
+            </a>
+            
+            <div class="info-add">
+                Add Task
+            </div>
+
+        
         </div>
+    </div>
+    {% endif %}
+
+
+    <div style="display: flex; justify-content: center;">
+        {% if created_by == request.user %}
+        <div class="content-title">
+            My Tasks
+        </div>
+        {% else %}
+        <div class="content-title">
+            {{ created_by.username }}' Tasks
+        </div>
+        {% endif %}
     </div>
     <div class="tasks-content">
         {% for task in tasks %}
@@ -19,9 +43,14 @@
                 <div class="task-container-titles">
                     <div style="display: flex; align-items: center;">
                         <div>
-                            <a style="text-decoration: none;" href="{% url 'tasks-detail' username task.id %}">{{ task.title }}</a>
+                            <a id="task-title" href="{% url 'tasks-detail' username task.id %}">
+                                {{ task.title }}
+                            </a>
                             
                         </div>
+
+                           
+                    
                         {% if not task.is_public %}
                         <div style="display: flex; align-items: center; margin-left: 5px;">
                             <img src="{% get_media_prefix %}lock.png" style="width: 20px;">
@@ -29,15 +58,30 @@
                         {% endif %}
                     </div>
 
-                    <div>
+                    <div class="task-time">
                         {{ task.time_created|date:"F d, Y" }}
                     </div>
                 </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="task-container-info">
+                        Unfinished Todos: {{ task.todos.all|filter_todo }}
+                    </div>
+                    {% if created_by == user %}
+                    <div style="display: flex; justify-content: space-between; width: 59px;">
+                        <div>
+                            <a href="{% url 'update-task' task.id %}">
+                                <img src="{% get_media_prefix %}edit.png" class="edit-img">
+                            </a>
+                        </div>
 
-                <div class="task-container-info">
-                    Active Todos: {{ task.todos.all|filter_todo }}
+                        <div>
+                            <a href="{% url 'delete-task' task.id %}">
+                                <img src="{% get_media_prefix %}bin.png" class="delete-img">
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-
 
             </div>
         </div>

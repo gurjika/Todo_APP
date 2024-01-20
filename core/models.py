@@ -18,7 +18,9 @@ class Task(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse('tasks-detail', kwargs={'username': self.created_by.username, 'pk': self.pk})
+        return reverse('tasks', kwargs={'username': self.created_by.username})
+      
+
 
 class Todo(models.Model):
     content = models.TextField(max_length=200)

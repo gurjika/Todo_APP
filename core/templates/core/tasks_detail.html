@@ -4,13 +4,12 @@
 
 {% endblock %}
 {% block content %}
-
-
-    <a class="add-container" href="{% url 'add-todo' task_pk %}">
+    {% if created_by == request.user %}
+    <div class="add-container">
         <div style="position: relative;">
-            <div>
+            <a href="{% url 'add-todo' task_pk %}" class="add-btn">
                 <img src="{% get_media_prefix %}plus.png" class="add-img">
-            </div>
+            </a>
             
             <div class="info-add">
                 Add Todo
@@ -18,8 +17,8 @@
 
         
         </div>
-    </a>
-
+    </div>
+    {% endif %}
 
         
 
