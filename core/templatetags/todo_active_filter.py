@@ -12,3 +12,6 @@ def filter_todo(todos):
 
     
     return not_finished_counter
+
+
+
