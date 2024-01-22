@@ -1,0 +1,151 @@
+.profile-img {
+    width: 100px;
+}
+
+
+
+.username {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.info-container {
+    width: 100%;
+    display: flex;
+    border-bottom-width: 2px;
+    border-bottom-color:rgba(177, 35, 177, 0.6);
+    border-bottom-style: solid;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+   
+    margin-bottom: 40px;
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.task-container-button {
+    font-size: 20px;
+    padding: 10px 12px;
+    color: rgba(177, 35, 177, 0.9);
+    cursor: pointer;
+    border-width: 2px;
+    border-style: solid;;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    background-color: white;
+    border-color: rgba(177, 35, 177, 0.9);
+    transition: background-color 0.15s;
+    font-weight: 600;
+    
+}
+
+
+
+
+.task-container-button:hover {
+    background-color: rgba(177, 35, 177, 1);
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+.container-profile {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: self-start;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-bottom: 300px;
+    padding-top: 50px;
+
+
+}
+
+
+.history-title-container {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+   
+    
+}
+
+
+.history-title {
+    border-bottom-width: 2px;
+    border-bottom-color:rgba(177, 35, 177, 0.6);
+    border-bottom-style: solid;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+
+.task-container {
+    max-width: 450px;
+    min-width: 200px;
+}
+
+
+
+@media (max-width: 830px) {
+    .history-container {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+
+
+.container-profile-info {
+    border-width: 2px;
+    border-color: rgba(181, 179, 179, 0.7);
+    border-style: solid;
+    background-color: aqua;
+    min-width: 500px;
+    
+}
+
+
+.profile-edit-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.profile-info {
+    display: flex; 
+    flex-direction: column;
+    align-items: start;
+    min-width: 450px;
+    max-width: 500px; 
+    background-color: white;
+    padding: 15px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(160, 151, 151, 0.3);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(160, 151, 151, 0.2);
+}
+
+.update-btn {
+    margin-bottom: 0;
+}
+
+
+.img-class a {
+    text-decoration: none;
+}

@@ -1,13 +1,19 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block styles %}
+<style>
+    body{
+    padding-left: 340px;
+    padding-right: 20px;
+    }
 
+</style>
 {% endblock %}
 {% block content %}
-    {% if created_by == request.user %}
+    {% if created_by == request.user and not task.is_finished %}
     <div class="add-container">
         <div style="position: relative;">
-            <a href="{% url 'add-todo' task_pk %}" class="add-btn">
+            <a href="{% url 'add-todo' task.id %}" class="add-btn">
                 <img src="{% get_media_prefix %}plus.png" class="add-img">
             </a>
             
@@ -25,9 +31,17 @@
 
 
 <div class="sidebar">
+    {% if created_by != request.user %}
     <div class="sidebar-title">
         {{ username }}'s Tasks
     </div>
+    {% else %}
+
+    <div class="sidebar-title">
+        My Tasks
+    </div>
+
+    {% endif %}
 
     <div class="sidebar-item-container">
         {% for task in tasks %}

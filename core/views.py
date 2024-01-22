@@ -85,7 +85,7 @@ class TasksView(QueryTasksByUsernameMixin, PublicCheckMixin, LoginRequiredMixin,
         context =  super().get_context_data(**kwargs)
         context['todos'] = Todo.objects.select_related('task').select_related('task__created_by'). \
         filter(task_id=self.kwargs['pk']).all()
-        context['task_pk'] = self.kwargs['pk']
+        context['task'] = get_object_or_404(Task, pk=self.kwargs['pk'])
         return context
     
     

@@ -2,29 +2,122 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+
 {%block styles %}
-<link rel="stylesheet" href="{% static 'users/login.css' %}">
+<link rel="stylesheet" href="{% static 'users/profile.css' %}">
+
 {% endblock %}
 
 {% block content %}
+<div class="container-profile">
+    <div>
+        <div class="profile-info">
+            <div>
+                <div class="info-container">
+                    <div style="margin-right: 10px;">
+                        <img src="{{ profile_img.url }}" class="profile-img">
+                    </div>
 
-<div class="login-main">
-    <div class="login-container">
-        <div class="login-title">
-            Log in
-        </div>  
+                    <div class="detail-info">
+                        <div class="username">
+                            {{ username }}
+                        </div>
 
-        <div class="login-form" style="width: 400px;">
-            <form method="post" class="your-custom-class">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <div style="width: 100%; display: flex; justify-content: center;">
-                <button class="submit-btn" type="submit">Submit</button>
-                </div>  
-            </form>
+                        <div class="email">
+                            {{ email }}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="profile-edit-container">
+                    <div>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {{ user_form|crispy }}
+                            {{ profile_form|crispy }}
+
+
+                            <div style="display: flex; justify-content: center;">
+                                <button type="submit" class="update-btn task-container-button">
+                                    Update
+                                </button>
+                            </div>
+
+
+                        </form>
+
+
+                        
+                    </div>
+                    
+                    
+                   
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="history-container">
+
+        <div class="history-title-container">
+            <div class="history-title">
+                Finished Tasks
+            </div>
         </div>
 
+        
+        {% for task in history %}
+        <a class="tasks-content" style="text-decoration: none;"  href="{% url 'tasks-detail' username task.id %}">
+            <div class="task-container">
+            
+                <div>
+                    <div class="task-container-titles">
+                        <div style="display: flex; align-items: center;">
+                            <div>
+                                <div id="task-title">
+                                    {{ task.title }}
+                                </div>
+                                
+                            </div>
+
+                            
+                        
+                            {% if not task.is_public %}
+                            <div style="display: flex; align-items: center; margin-left: 5px;">
+                                <img src="{% get_media_prefix %}lock.png" style="width: 20px;">
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="task-time">
+                            {{ task.time_created|date:"F d, Y" }}
+                        </div>
+                    </div>
+        
+
+                </div>
+            </div>
+            
+        </a>
+        {% endfor %}
+
+        <div style="display: flex; justify-content: center;">
+            
+            <button  class="task-container-button">
+                See All Finished Tasks
+            </button>
+        </div>
     </div>
+    
+
+    
 </div>
 
 {% endblock %}
