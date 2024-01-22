@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load todo_active_filter %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'core/tasks_all.css' %}">
+{% endblock %}
+{% block content %}
+<div style="padding-bottom: 100px;">
+
+
+
+    <div style="display: flex; justify-content: center;">
+      
+        <div class="content-title">
+            Finished Tasks
+        </div>
+       
+    </div>
+    <div class="tasks-content">
+        {% for task in tasks %}
+        <div class="task-container">
+        
+            <div>
+                <div class="task-container-titles">
+                    <div style="display: flex; align-items: center; margin-right: 10px;">
+                        <div>
+                            <a id="task-title" href="{% url 'tasks-detail' user.username task.id %}">
+                                {{ task.title }}
+                            </a>
+                            
+                        </div>
+                           
+                    
+                        {% if not task.is_public %}
+                        <div style="display: flex; align-items: center; margin-left: 5px;">
+                            <img src="{% get_media_prefix %}lock.png" style="width: 20px;">
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="task-time">
+                        {{ task.time_created|date:"F d, Y" }}
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    
+                    
+                    <div style="display: flex; justify-content: space-between; width: 59px;">
+                        <div>
+                            <a href="{% url 'delete-task' task.id %}">
+                                <img src="{% get_media_prefix %}bin.png" class="delete-img">
+                            </a>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

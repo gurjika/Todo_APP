@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, View
+from django.contrib.auth.views import LoginView
 
 from core.models import Task
 from .forms import RegisterForm, UserUpdateForm, ProfileUpdateForm
@@ -11,13 +12,22 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+class MyLoginView(LoginView):
+    template_name='users/login.html'
+    next_page='/'
+
+    def get_success_url(self) -> str:
+        username = self.request.user.username
+        return f'/{username}'
 
 class SignUpView(CreateView):
     form_class = RegisterForm
     template_name = 'users/signup.html'
     model = User
 
-    success_url = '/home'
+    def get_success_url(self) -> str:
+        username = self.request.user.username
+        return f'/{username}'
 
 
 
@@ -56,15 +66,25 @@ def profile(request, username):
 
     profile_img = user.profile.img
     email = user.email
-    history = Task.objects.filter(is_finished=True).filter(created_by=user).all()[:5]
+    task_data = None
+    guest_user = False
 
+    if user == request.user:
+        task_data = Task.objects.filter(is_finished=True).filter(created_by=user).all()[:5]
+    else:
+        guest_user = True
+        task_data = Task.objects.filter(is_finished=False) \
+        .filter(created_by=user).filter(is_public=True).all()[:5]
+
+    
     context = {
         'user_form': user_form,
         'profile_form': profile_form,
-        'profile_img': profile_img,
-        'username': username,
-        'email': email,
-        'history': history
+        'profile_user': user,
+        'task_data': task_data,
+        'guest_user': guest_user,
     }
 
     return render(request, 'users/profile.html', context=context)
+
+

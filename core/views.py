@@ -1,5 +1,6 @@
 from typing import Any
 from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
@@ -198,4 +199,20 @@ class DeleteTaskView(TaskTestUserMixin, LoginRequiredMixin, UserPassesTestMixin,
 
 
         
+class FinishedTasksView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Task
+    context_object_name = 'tasks'
+    template_name = 'core/finished_tasks.html'
+
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Task.objects.filter(created_by=self.request.user).filter(is_finished=True).all()
     
+
+    def test_func(self):
+       username = self.kwargs['username']
+       user = get_object_or_404(User, username=username)
+
+       if user == self.request.user:
+           return True
+       return False

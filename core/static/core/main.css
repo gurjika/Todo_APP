@@ -113,6 +113,7 @@ p{
 .sidebar-title {
     color: white;
     display: flex;
+    font-weight: 700;
     justify-content: center;
     padding-top: 10px;
     font-size: 25px;
@@ -253,4 +254,25 @@ p{
 
 .add-container:hover .info-add{
     opacity: 1;
+}
+
+
+
+
+.delete-btn {
+    background-color: white;
+    color: rgb(232, 49, 49);;
+    font-weight: bold;
+    border-width: 3px;
+    border: solid;
+    border-color: rgb(232, 49, 49);;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.20s, color 0.20s;
+
+}
+
+.delete-btn:hover {
+    color: white;
+    background-color: rgb(232, 49, 49);
 }

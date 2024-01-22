@@ -17,7 +17,6 @@
     border-bottom-style: solid;
     justify-content: flex-start;
     padding-bottom: 10px;
-   
     margin-bottom: 40px;
 }
 
@@ -50,14 +49,6 @@
     background-color: rgba(177, 35, 177, 1);
     color: white;
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -94,10 +85,7 @@
 }
 
 
-.task-container {
-    max-width: 450px;
-    min-width: 200px;
-}
+
 
 
 
@@ -116,7 +104,6 @@
     border-style: solid;
     background-color: aqua;
     min-width: 500px;
-    
 }
 
 
@@ -148,4 +135,25 @@
 
 .img-class a {
     text-decoration: none;
+}
+
+
+
+.bio-title{
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+
+
+.history-container .tasks-content .task-container {
+    min-width: unset;
+    max-width: unset;
+    width: 100%;
+}
+
+.history-container {
+    min-width: 300px;
+    max-width: 470px;
 }

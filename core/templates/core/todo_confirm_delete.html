@@ -1,10 +1,19 @@
 {% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
+{% block styles %}
+    <link rel="stylesheet" type='text/css' href="{% static 'core/confirm_delete.css' %}">
+{% endblock %}
 
 {% block content %}
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    {{ form }}
-    <input type="submit" value="Confirm">
-</form>
+<div class="delete-container">
+    
+    <form method="post" class="delete-form">
+        {% csrf_token %}
+        <p class="delete-p">Are you sure you want to delete Todo "{{ object }}"?</p>
+
+        <input type="submit" value="Confirm" class="delete-btn">
+    </form>
+</div>
 {% endblock %}
