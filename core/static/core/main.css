@@ -7,15 +7,14 @@ p{
     
 }
 
-body{
-    padding-left: 340px;
-}
+
+
 .container {
     text-decoration: none;
     min-height: 250px;
     background-color: white;
-    border-color: rgba(177, 35, 177, 0.6);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-color: rgba(177, 35, 177, 0.8);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     border-style: solid;
     border-width: 3px;
     border-radius: 12px;
@@ -23,7 +22,6 @@ body{
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 5px;
-    cursor: pointer;
     transition: background-color 0.15s;
 }
 
@@ -32,7 +30,6 @@ body{
 }
 
 .title {
-    cursor: pointer;
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
@@ -45,7 +42,7 @@ body{
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    column-gap: 20px;
+    column-gap: 30px;
     row-gap: 40px;
 }
 
@@ -116,6 +113,7 @@ body{
 .sidebar-title {
     color: white;
     display: flex;
+    font-weight: 700;
     justify-content: center;
     padding-top: 10px;
     font-size: 25px;
@@ -163,4 +161,143 @@ body{
 
 .follow-arrow {
     width: 25px;
+}
+
+
+.edit-img-div{
+    display: flex;
+    align-items: center;
+
+    margin-left: 5px;
+
+}
+
+.edit-img {
+    width: 20px;
+}
+
+
+
+.finished {
+    width: 25px;
+}
+
+
+.tasks-counter-div {
+    position: relative;
+   
+}
+
+.tasks-counter {
+    position: absolute;
+    top: -10px;
+    right: -24px;
+    background-color: rgb(45, 118, 69);
+    color: white;
+    font-size: 13px;
+    border-radius: 12px;
+    min-height: 23px;
+    min-width: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+
+}
+
+#mytasks {
+    text-decoration: none;
+    border: none;
+    background-color: rgb(177, 35, 177);
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.15s;
+
+}
+
+#mytasks:hover {
+    background-color: rgb(155, 30, 155);
+}
+
+
+.add-container {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    text-decoration: none;
+    
+}
+
+
+.add-img {
+    cursor: pointer;
+    width: 70px;
+}
+
+
+.info-add{
+    position: absolute;
+    background-color: rgb(134, 128, 128);
+    color: white;
+    padding: 6px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    bottom: 20px;
+    left: -85px;
+    opacity: 0;
+    pointer-events: none;
+    cursor: none;
+    transition: opacity 0.20s;
+}
+
+.add-container:hover .info-add{
+    opacity: 1;
+}
+
+
+
+
+.delete-btn {
+    background-color: white;
+    color: rgb(232, 49, 49);;
+    font-weight: bold;
+    border-width: 3px;
+    border: solid;
+    border-color: rgb(232, 49, 49);;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.20s, color 0.20s;
+
+}
+
+.delete-btn:hover {
+    color: white;
+    background-color: rgb(232, 49, 49);
+}
+
+
+.grid-container-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.finished-todo-title-container {
+    width: 100%;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+   
+}
+
+
+.finished-todo-title {
+     margin-bottom: 15px;
+    border-bottom-width: 2px;
+    border-bottom-color:rgba(177, 35, 177, 0.6);
+    border-bottom-style: solid;
+    padding-bottom: 5px;
 }

@@ -1,19 +1,52 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block styles %}
+<style>
+    body{
+    padding-left: 340px;
+    padding-right: 20px;
+    }
 
+</style>
 {% endblock %}
 {% block content %}
+{% if created_by == request.user and not task.is_finished %}
+    
+    <div class="add-container">
+        <div style="position: relative;">
+            <a href="{% url 'add-todo' task.id %}" class="add-btn">
+                <img src="{% get_media_prefix %}plus.png" class="add-img">
+            </a>
+            
+            <div class="info-add">
+                Add Todo
+            </div>
+
+        
+        </div>
+    </div>
+{% endif %}
+
+        
+
 
 
 <div class="sidebar">
+    {% if created_by != request.user %}
     <div class="sidebar-title">
-        All Tasks
+        {{ username }}'s Tasks
     </div>
+    {% else %}
+
+    <div class="sidebar-title">
+        My Tasks
+    </div>
+
+    {% endif %}
 
     <div class="sidebar-item-container">
         {% for task in tasks %}
-        <a class="sidebar-item" href="{% url 'tasks-detail' task.id %}">
+        <a class="sidebar-item" href="{% url 'tasks-detail' username task.id %}">
 
             {{ task.title }}
             <div class="sidebar-arrow-container">
@@ -22,36 +55,133 @@
             
         </a>
         {% endfor %}
-   
 
-       
+
+    
     </div>
 
 </div>
-<div class="grid-container">
-    {% for todo in todos %}
-    <a class="container" href="{% url 'todo-detail' todo.task.id todo.id %}">
-        <div class="title" >
+{% if todos %}
+<div class="grid-container-container">
 
-            <div class="title-info">
-                Todo
-            </div>
-    
-            <div class="title-time">
-                {{ todo.time_created|date:"h:i A" }}
-            </div>
+
+
+     <div class="finished-todo-title-container">
+        <div class="finished-todo-title">
+            Finished Todos
         </div>
+    </div>
+
+    <div class="grid-container">
+        {% for todo in todos %} 
+
+        {% if todo.is_finished %}
+        <div class="container" style="border-color: green;">
+      
        
-        <div>
-            <p class="todo-text">
-                {{ todo.content }}
-            </p>
+            <div class="title">
+                <div style="display: flex; align-items: center;">
+                    <div class="title-info">
+                        Todo
+                    </div>
+                    {% if user == todo.task.created_by %}
+                    <div>
+                        <a href="{% url 'todo-detail' user.username todo.task.id todo.id %}" class="edit-img-div">
+                            <img src="{% get_media_prefix %}edit.png" class="edit-img">
+                        </a>    
+                    </div>
+                    {% endif %}
+                </div>
+                {% if todo.is_finished %}
+                <div style="display: flex; align-items: center; width: 130px; justify-content: flex-end;">
+                    
+
+                    <div class="title-time" style="text-wrap: nowrap; margin-right: 5px;">
+                        {{ todo.time_created|date:"F j" }}
+                    </div>
+
+                    <div>
+                        <img src="{% get_media_prefix %}accept.png" class="finished">
+                    </div>
+                
+                </div>
+             
+                {% endif %}
+            </div>
+        
+            <div>
+                <p class="todo-text">
+                    {{ todo.content }}
+                </p>
+            </div>
+
+
         </div>
+        {% endif %}
+        {% endfor %}
+        
+
+    </div>
 
 
-    </a>
-    {% endfor %}
+    <div class="finished-todo-title-container">
+        <div class="finished-todo-title">
+            Unfinished Todos
+        </div>
+    </div>
+
+    <div class="grid-container">
+        {% for todo in todos %} 
+
+        {% if not todo.is_finished %}
+        <div class="container">
+      
+       
+            <div class="title">
+                <div style="display: flex; align-items: center;">
+                    <div class="title-info">
+                        Todo
+                    </div>
+                    {% if user == todo.task.created_by %}
+                    <div>
+                        <a href="{% url 'todo-detail' user.username todo.task.id todo.id %}" class="edit-img-div">
+                            <img src="{% get_media_prefix %}edit.png" class="edit-img">
+                        </a>    
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div style="display: flex; align-items: center; width: 100px; justify-content: flex-end;">
+                    
+
+                    <div class="title-time">
+                        {{ todo.time_created|date:"F j" }}
+                    </div>
+
+                    
+
+                </div>
+        
+
+                
+            </div>
+        
+            <div>
+                <p class="todo-text">
+                    {{ todo.content }}
+                </p>
+            </div>
+
+
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+
+    </div>
+
     
-
 </div>
+
+{% endif %}
 {% endblock %}

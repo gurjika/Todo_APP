@@ -1,0 +1,139 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{%block styles %}
+<link rel="stylesheet" type='text/css' href="{% static 'users/profile.css' %}">
+<link rel="stylesheet" type='text/css' href="{% static 'core/tasks_all.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="container-profile">
+    
+    <div class="profile-info" style="flex: 1;">
+    
+        <div class="info-container">
+            <div style="margin-right: 10px;">
+                <img src="{{ profile_user.profile.img.url }}" class="profile-img">
+            </div>
+
+            <div class="detail-info">
+                <div class="username">
+                    {{ profile_user.username }}
+                </div>
+
+                <div class="email">
+                    {{ profile_user.email }}
+                </div>
+            </div>
+        </div>
+
+        {% if not guest_user %}
+
+        <div class="profile-edit-container"  style="width:100%; display: flex; flex-direction: column; align-items: center;">
+           
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ user_form|crispy }}
+                {{ profile_form|crispy }}
+
+
+                <div style="display: flex; justify-content: center;">
+                    <button type="submit" class="update-btn task-container-button">
+                        Update
+                    </button>
+                </div>
+            </form> 
+                               
+        </div>
+
+
+        {% else %}
+
+        <div class="bio-container">
+            <div class="bio-title">
+                About Me
+            </div>
+
+            <div class="bio-content">
+                {{ profile_user.profile.bio }}
+            </div>
+        </div>
+        {% endif %}
+
+    
+
+
+
+    </div>
+
+    
+    <div class="history-container" style="flex: 1">
+        <div class="history-title-container">
+            <div class="history-title">
+                {% if not guest_user %}
+                    Finished Tasks
+                {% else %}
+                    {{ profile_user.username }}' Tasks
+                {% endif %}
+            </div>
+        </div>
+    
+        
+        {% for task in task_data %}
+        <a class="tasks-content" style="text-decoration: none;"  href="{% url 'tasks-detail' profile_user.username task.id %}">
+            <div class="task-container">
+            
+                <div>
+                    <div class="task-container-titles">
+                        <div style="display: flex; align-items: center;">
+                            <div>
+                                <div id="task-title">
+                                    {{ task.title }}
+                                </div>
+                                
+                            </div>
+                        
+                            {% if not task.is_public %}
+                            <div style="display: flex; align-items: center; margin-left: 5px;">
+                                <img src="{% get_media_prefix %}lock.png" style="width: 20px;">
+                            </div>
+                            {% endif %} 
+                        </div>
+
+                        <div class="task-time">
+                            {{ task.time_created|date:"F d, Y" }}
+                        </div>
+                    </div>
+        
+
+                </div>
+            </div>
+            
+        </a>
+        {% endfor %}
+
+        <div style="display: flex; justify-content: center;">
+            {% if not guest_user %}
+            <a  class="task-container-button" style="text-decoration: none;" href="{% url 'finished-tasks' user.username %}">
+               See All Finished Tasks
+                
+            </a>   
+
+            {% else %}
+                <a  class="task-container-button" style="text-decoration: none;" href="{% url 'tasks' user.username %}">
+                    See All Tasks  
+                </a>
+
+            {% endif %}
+        </div>
+    </div>
+    
+
+    
+</div>
+
+{% endblock %}

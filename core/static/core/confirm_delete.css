@@ -1,0 +1,19 @@
+.delete-container {
+    display: flex; 
+    justify-content: center
+    
+}
+
+
+.delete-form {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+}
+
+
+.delete-p{
+    font-size: 25px;
+    font-weight: 600;   
+    text-align: center;
+}

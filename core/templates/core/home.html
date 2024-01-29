@@ -47,7 +47,7 @@
             
             <div class="login-button-container">
                 {% if user.is_authenticated %}
-                <a class="submit-btn" href="{% url 'tasks' %}">
+                <a class="submit-btn" href="{% url 'tasks' user.username %}">
                     Go My Tasks
                 </a>
 

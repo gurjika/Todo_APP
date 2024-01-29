@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -79,14 +83,20 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+PASSWORD = os.getenv('PASSWORD')
+USER = os.getenv('USER')
+
+
+print(USER)
+print(PASSWORD)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'todo',
         'HOST': 'localhost',
-        'USER': 'gurjika',
-        'PASSWORD': 'Lukikosi7680BGH',
+        'USER': USER,
+        'PASSWORD': PASSWORD,
     }
 }
 
@@ -147,3 +157,11 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'core/static/'),
+    os.path.join(BASE_DIR, 'users/static/'),
+]    
