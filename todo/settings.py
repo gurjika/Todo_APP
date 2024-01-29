@@ -87,8 +87,6 @@ PASSWORD = os.getenv('PASSWORD')
 USER = os.getenv('USER')
 
 
-print(USER)
-print(PASSWORD)
 
 DATABASES = {
     'default': {
