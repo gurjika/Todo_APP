@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import CreateView, View
 from django.contrib.auth.views import LoginView
-
+import os
+from dotenv import load_dotenv
 from core.models import Task
 from .forms import RegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.models import User
@@ -9,10 +10,14 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 
+load_dotenv()  
+
+
 # Create your views here.
 
 
 class MyLoginView(LoginView):
+
     template_name='users/login.html'
     next_page='/'
 
