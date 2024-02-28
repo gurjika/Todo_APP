@@ -1,8 +1,8 @@
-ToDoApp
+### ToDoApp
 
 ToDoApp is a task management system designed to boost your productivity.
 
-Features
+### Features
 
 Task Organization: Easily categorize your tasks into different lists.
 
@@ -14,7 +14,7 @@ User Profiles: Create your profile, set an avatar, and personalize your space wi
 
 Collaboration: Public tasks can be viewed by others, fostering a collaborative environment.
 
-Usage
+### Usage
 
 Home Page: Quick overview of all your task categories and their completion status.
 
@@ -24,19 +24,16 @@ New Task: Easily add new tasks and specify if they are public or private.
 
 Profile: Customize your personal information and manage your public tasks.
 
-Screenshots
-Here are some screenshots of the app in action:
-
-Task page with task categories and navigation.
+### Task page with task categories and navigation.
 
 ![todoapp1](https://github.com/gurjika/todo/assets/109608546/a3c4636f-031f-4f81-b3d2-385d86f8e142)
 
 
-Detailed task view with options to edit or delete.
+### Detailed task view with options to edit or delete.
 
 ![todoapp2](https://github.com/gurjika/todo/assets/109608546/d98af8a3-e401-47bc-8c1c-bc399ff0ab4d)
 
-User profile with an option to manage tasks.
+### User profile with an option to manage tasks.
 
 ![todoapp3](https://github.com/gurjika/todo/assets/109608546/529dabd8-fd26-4368-a326-3492a236fb9f)
 
