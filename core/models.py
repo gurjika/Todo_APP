@@ -20,6 +20,8 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('tasks', kwargs={'username': self.created_by.username})
       
+    class Meta:
+        ordering = ['-time_created']
 
 
 class Todo(models.Model):

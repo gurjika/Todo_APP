@@ -1,0 +1,53 @@
+{% load static %}
+{% load todo_active_filter %}
+
+{% for task in tasks %}
+        <div class="task-container">
+        
+            <div>
+                <div class="task-container-titles">
+                    <div style="display: flex; align-items: center; margin-right: 10px;">
+                        <div>
+                            <a id="task-title" href="{% url 'tasks-detail' username task.id %}">
+                                {{ task.title }}
+                            </a>
+                            
+                        </div>
+
+                           
+                    
+                        {% if not task.is_public %}
+                        <div style="display: flex; align-items: center; margin-left: 5px;">
+                            <img src="{% get_media_prefix %}lock.png" style="width: 20px;">
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="task-time">
+                        {{ task.time_created|date:"F d, Y" }}
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="task-container-info">
+                        Unfinished Todos: {{ task.todos.all|filter_todo }}
+                    </div>
+                    {% if created_by == user %}
+                    <div style="display: flex; justify-content: space-between; width: 59px;">
+                        <div>
+                            <a href="{% url 'update-task' task.id %}">
+                                <img src="{% get_media_prefix %}edit.png" class="edit-img">
+                            </a>
+                        </div>
+
+                        <div>
+                            <a hx-delete="{% url 'delete-htmx' task.id %}" hx-target="#task-list">
+                                <img src="{% get_media_prefix %}bin.png" class="delete-img">
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+{% endfor %}

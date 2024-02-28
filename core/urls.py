@@ -1,5 +1,6 @@
 from django.urls import include, path
 from . import views
+from . import htmx_views
 
 
 urlpatterns = [
@@ -15,3 +16,10 @@ urlpatterns = [
     path('<str:username>/tasks/<int:pk>/todos/<int:todo_pk>/delete-todo/', views.DeleteTodoView.as_view(), name='delete-todo'),
     path('<str:username>/tasks/<int:pk>/todos/<int:todo_pk>/update-todo/', views.TodoUpdateView.as_view(), name='update-todo'),
 ]
+
+htmx_patterns = [
+    path('delete-htmx/<int:pk>', htmx_views.delete_task, name='delete-htmx')
+]
+
+
+urlpatterns += htmx_patterns
