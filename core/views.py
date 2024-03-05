@@ -69,6 +69,7 @@ class QueryTasksByUsernameMixin:
         
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        
         context['username'] = self.kwargs['username']
         context['created_by'] = created_by
         return context
@@ -89,14 +90,26 @@ class TasksView(QueryTasksByUsernameMixin, PublicCheckMixin, LoginRequiredMixin,
         context['task'] = get_object_or_404(Task, pk=self.kwargs['pk'])
         return context
     
+
+
     
     
     
 
 class TasksAllView(QueryTasksByUsernameMixin, LoginRequiredMixin, ListView):
-    template_name = 'core/tasks_all.html'
     context_object_name = 'tasks'
+    paginate_by = 5
 
+
+
+    def get_template_names(self):
+        if self.request.htmx:
+            return 'core/partials/tasks_all_partials.html'
+        return 'core/tasks_all.html'
+    
+
+
+    
 
     
 

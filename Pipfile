@@ -12,6 +12,7 @@ crispy-bootstrap5 = "*"
 pillow = "*"
 drf-nested-routers = "*"
 python-dotenv = "*"
+django-htmx = "*"
 
 [dev-packages]
 

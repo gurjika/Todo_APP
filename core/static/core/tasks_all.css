@@ -82,3 +82,8 @@ body {
 .delete-img {
     width: 24px;
 }
+
+
+.paginator {
+    margin-right: 10px;
+}
