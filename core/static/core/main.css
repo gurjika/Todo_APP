@@ -10,6 +10,7 @@ p{
 
 
 .container {
+    width: 250px;
     text-decoration: none;
     min-height: 250px;
     background-color: white;
