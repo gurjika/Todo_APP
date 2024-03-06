@@ -39,8 +39,12 @@ class TaskTestUserMixin:
             return False
 
 class PublicCheckMixin:
+
+    def get_task(self):
+        return get_object_or_404(Task, pk=self.kwargs['pk'])
+
     def test_func(self):
-        task = get_object_or_404(Task, pk=self.kwargs['pk'])
+        task = self.get_task()
 
         if task.is_public or self.request.user == task.created_by:
             return True
@@ -87,7 +91,7 @@ class TasksView(QueryTasksByUsernameMixin, PublicCheckMixin, LoginRequiredMixin,
         context =  super().get_context_data(**kwargs)
         context['todos'] = Todo.objects.select_related('task').select_related('task__created_by'). \
         filter(task_id=self.kwargs['pk']).all()
-        context['task'] = get_object_or_404(Task, pk=self.kwargs['pk'])
+        context['task'] = self.get_task()
         return context
     
 

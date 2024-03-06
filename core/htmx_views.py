@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from .models import Task
+from .models import Task, Todo
 from django.core.paginator import Paginator
 import math
 
@@ -27,3 +27,35 @@ def delete_task(request, pk):
     }
 
     return render(request, 'core/partials/tasks_all_partial.html', context)
+
+
+@login_required
+def update_todo_status(request, todo_pk):
+
+    print('*' * 50)
+
+    print(todo_pk)
+
+    print('*' * 50)
+    todo = Todo.objects.get(pk=todo_pk)
+
+    context = {}
+
+    context['todos'] = Todo.objects.select_related('task').select_related('task__created_by'). \
+    filter(task_id=todo.task.pk).all()
+    context['task'] = todo.task
+    
+
+    if request.user == todo.task.created_by:
+        if todo.is_finished:
+            todo.is_finished = False
+        else:
+            todo.is_finished = True
+        
+        todo.save()
+
+
+    return render(request, 'core/partials/generate-todos.html', context)
+
+
+

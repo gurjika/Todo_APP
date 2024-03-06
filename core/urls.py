@@ -18,7 +18,8 @@ urlpatterns = [
 ]
 
 htmx_patterns = [
-    path('delete-htmx/<int:pk>', htmx_views.delete_task, name='delete-htmx')
+    path('delete-htmx/<int:pk>/', htmx_views.delete_task, name='delete-htmx'),
+    path('update-todo-status/<int:todo_pk>/', htmx_views.update_todo_status, name='update-todo-status')
 ]
 
 
